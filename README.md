@@ -29,3 +29,14 @@ test('#isDefined, #isUndefined', function(){
   assert.isDefined( 'hello', 'a string is not undefined' );
 });
 ```
+
+### 3. Use `assert.isOK` and `assert.isNotOK`  
+In `tests/1_unit-tests.js`, use `assert.isOk(object, [message])` or `assert.isNotOk(object, [message])` to make the tests pass (.isOk(truthy) and .isNotOk(falsey) will pass).  
+Ref: https://www.chaijs.com/api/assert/#method_isok  
+```js
+test('#isOk, #isNotOk', function(){
+  assert.isNotOk( null, 'null is falsey');
+  assert.isOk( "I'm truthy", 'a string is truthy');
+  assert.isOk( true, 'true is truthy' );
+});
+```
