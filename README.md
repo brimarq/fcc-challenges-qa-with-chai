@@ -51,3 +51,15 @@ test('#isTrue, #isNotTrue', function(){
   assert.isNotTrue({ value: 'truthy' }, 'A truthy object is NOT TRUE (neither is false...)' );
 });
 ```
+
+### 5. Use the Double Equals to Assert Equality  
+In `tests/1_unit-tests.js`, use `assert.equal(actual, expected, [message])` and  `assert.notEqual(actual, expected, [message])` to make the tests pass. These methods compare objects using `==`.  
+Ref: https://www.chaijs.com/api/assert/#method_equal  
+```js
+test('#equal, #notEqual', function(){ 
+  assert.equal( 12, '12', 'numbers are coerced into strings with == ');
+  assert.notEqual( {value: 1}, {value:1}, '== compares object references, NOT values');
+  assert.equal( 6 * '2', '12', 'Number * String representation of number -> Number');
+  assert.notEqual( 6 + '2', '12', 'Oops! Number + String -> concatenation' );
+});
+```

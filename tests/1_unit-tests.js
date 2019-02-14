@@ -60,10 +60,14 @@ suite('Unit Tests', function(){
     /** 5 - .equal(), .notEqual() **/
     // .equal() compares objects using '=='
     test('#equal, #notEqual', function(){
-      assert.fail( 12, '12', 'numbers are coerced into strings with == ');
-      assert.fail( {value: 1}, {value:1}, '== compares object references');
-      assert.fail( 6 * '2', '12', 'no more hints...');
-      assert.fail( 6 + '2', '12', 'type your error message if you want' );
+      // assert.fail( 12, '12', 'numbers are coerced into strings with == ');
+      // assert.fail( {value: 1}, {value:1}, '== compares object references');
+      // assert.fail( 6 * '2', '12', 'no more hints...');
+      // assert.fail( 6 + '2', '12', 'type your error message if you want' );
+      assert.equal( 12, '12', 'numbers are coerced into strings with == ');
+      assert.notEqual( {value: 1}, {value:1}, '== compares object references, NOT values');
+      assert.equal( 6 * '2', '12', 'Number * String representation of number -> Number');
+      assert.notEqual( 6 + '2', '12', 'Oops! Number + String -> concatenation' );
     });
     /** 6 - .strictEqual(), .notStrictEqual() **/
     // .strictEqual() compares objects using '==='
