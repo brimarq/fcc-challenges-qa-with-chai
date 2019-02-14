@@ -40,3 +40,14 @@ test('#isOk, #isNotOk', function(){
   assert.isOk( true, 'true is truthy' );
 });
 ```
+
+### 4. Test for Truthiness  
+In `tests/1_unit-tests.js`, use `assert.isTrue(value, [message])` or `assert.isNotTrue(value, [message])` to make the tests pass ( .isTrue(true) and .isNotTrue(everything else) will pass. .isFalse() and .isNotFalse() also exist).  
+Ref: https://www.chaijs.com/api/assert/#method_istrue  
+```js
+test('#isTrue, #isNotTrue', function(){
+  assert.isTrue( true, 'true is true');
+  assert.isTrue( !!'double negation', 'double negation of a truthy is true');
+  assert.isNotTrue({ value: 'truthy' }, 'A truthy object is NOT TRUE (neither is false...)' );
+});
+```
