@@ -31,16 +31,16 @@ suite('Functional Tests', function() {
     suite('GET /hello?name=[name] => "hello [name]"', function(){
       // We send a name string in the url query string.
       test('#example - ?name=John',  function(done){   // Don't forget the callback...
-         chai.request(server)             // 'server' is the Express App
-          .get('/hello?name=John')        // http_method(url)
-          .end(function(err, res){        // Send the request. Pass a callback in
-                                          // node style. `res` is the response object
-            // res.status contains the status code
-            assert.equal(res.status, 200, 'response status should be 200');
-            // res.text contains the response as a string
-            assert.equal(res.text, 'hello John', 'response should be "hello John"');
-            done();
-          });
+        chai.request(server)             // 'server' is the Express App
+        .get('/hello?name=John')        // http_method(url)
+        .end(function(err, res){        // Send the request. Pass a callback in
+                                        // node style. `res` is the response object
+          // res.status contains the status code
+          assert.equal(res.status, 200, 'response status should be 200');
+          // res.text contains the response as a string
+          assert.equal(res.text, 'hello John', 'response should be "hello John"');
+          done();
+        });
       });
       
       /** Ready to have a try ?
@@ -48,32 +48,31 @@ suite('Functional Tests', function() {
        
       // If no name is passed, the endpoint responds with 'hello Guest'.
       test('Test GET /hello with no name',  function(done){ // Don't forget the callback...
-         chai.request(server)             // 'server' is the Express App
-          .get('/hello')                  // http_method(url). NO NAME in the query !
-          .end(function(err, res){        // res is the response object
-          
-            // Test the status and the text response (see the example above). 
-            // Please follow the order -status, -text. We rely on that in our tests.
-            // It should respond 'Hello Guest'
-            assert.fail(res.status, 200);
-            assert.fail(res.text, 'hello Guest');
-            done();   // Always call the 'done()' callback when finished.
-          });
+        chai.request(server)             // 'server' is the Express App
+        .get('/hello')                  // http_method(url). NO NAME in the query !
+        .end(function(err, res){        // res is the response object
+        
+          // Test the status and the text response (see the example above). 
+          // Please follow the order -status, -text. We rely on that in our tests.
+          // It should respond 'Hello Guest'
+          assert.equal(res.status, 200);
+          assert.equal(res.text, 'hello Guest');
+          done();   // Always call the 'done()' callback when finished.
+        });
       });
 
       /**  Another one... **/
-      test('Test GET /hello with your name',  function(done){ // Don't forget the callback...
-         chai.request(server)             // 'server' is the Express App
-          .get('/hello?name=xy_z') /** <=== Put your name in the query **/ 
-          .end(function(err, res){        // res is the response object
-          
-            // Your tests here.
-            // Replace assert.fail(). Make the test pass.
-            // Test the status and the text response. Follow the test order like above.
-            assert.fail(res.status, 200);
-             assert.fail(res.text, 'hello xy_z'/** <==  Put your name here **/);
-            done();   // Always call the 'done()' callback when finished.
-          });
+      test('Test GET /hello with your name',  function(done){ // Don't forget the callback... 
+        chai.request(server)             // 'server' is the Express App
+        .get('/hello?name=Brian') /** <=== Put your name in the query **/ 
+        .end(function(err, res){        // res is the response object 
+          // Your tests here.
+          // Replace assert.fail(). Make the test pass.
+          // Test the status and the text response. Follow the test order like above.
+          assert.equal(res.status, 200);
+          assert.equal(res.text, 'hello Brian'/** <==  Put your name here **/);
+          done();   // Always call the 'done()' callback when finished.
+        });
       });
 
     });
@@ -89,22 +88,22 @@ suite('Functional Tests', function() {
     // ### EXAMPLE ### 
     suite('PUT /travellers', function(){
       test('#example - responds with appropriate JSON data when sending {surname: "Polo"}',  function(done){
-         chai.request(server)
-          .put('/travellers')         // note the PUT method
-          .send({surname: 'Polo'})    // attach the payload, encoded as JSON
-          .end(function(err, res){    // Send the request. Pass a Node callback
+        chai.request(server)
+        .put('/travellers')         // note the PUT method
+        .send({surname: 'Polo'})    // attach the payload, encoded as JSON
+        .end(function(err, res){    // Send the request. Pass a Node callback
 
-            assert.equal(res.status, 200, 'response status should be 200');
-            assert.equal(res.type, 'application/json', "Response should be json");
-            
-            // res.body contains the response parsed as a JS object, when appropriate
-            // (i.e the response type is JSON)
-            assert.equal(res.body.name, 'Marco', 'res.body.name should be "Marco"');
-            assert.equal(res.body.surname, 'Polo', 'res.body.surname should be "Polo"' );
-            
-            // call 'done()' when... done
-            done();
-          });
+          assert.equal(res.status, 200, 'response status should be 200');
+          assert.equal(res.type, 'application/json', "Response should be json");
+          
+          // res.body contains the response parsed as a JS object, when appropriate
+          // (i.e the response type is JSON)
+          assert.equal(res.body.name, 'Marco', 'res.body.name should be "Marco"');
+          assert.equal(res.body.surname, 'Polo', 'res.body.surname should be "Polo"' );
+          
+          // call 'done()' when... done
+          done();
+        });
       });
 
       /** Now it's your turn. Make the test pass. **/
@@ -115,18 +114,18 @@ suite('Functional Tests', function() {
       // !!!! Follow the order of the assertions in the preceding example!!!!, 
       // we rely on it in our tests.
       
-      test('send {surname: "Colombo"}',  function(done){
-       
+      test('send {surname: "Colombo"}',  function(done) {
        // we setup the request for you...
        chai.request(server)
         .put('/travellers')
         /** send {surname: 'Colombo'} here **/
-        // .send({...})
-        .end(function(err, res){
-          
+        .send({surname: 'Colombo'})
+        .end(function(err, res) { 
           /** your tests here **/
-          assert.fail(); // remove this after adding tests
-          
+          assert.equal(res.status, 200);
+          assert.equal(res.type, 'application/json');
+          assert.equal(res.body.name, 'Cristoforo'); 
+          assert.equal(res.body.surname, 'Colombo');
           done(); // Never forget the 'done()' callback...
         });
       });
@@ -135,12 +134,19 @@ suite('Functional Tests', function() {
       // Try it again. This time without help !!
       test('send {surname: "da Verrazzano"}', function(done) {
         /** place the chai-http request code here... **/
-        
-        /** place your tests inside the callback **/
-        
-        assert.fail(); // remove this after adding tests
-        done();
+        chai.request(server)
+        .put('/travellers')
+        .send({surname: "da Verrazzano"})
+        .end(function(err, res) {
+          /** place your tests inside the callback **/
+          assert.equal(res.status, 200);
+          assert.equal(res.type, 'application/json');
+          assert.equal(res.body.name, 'Giovanni'); 
+          assert.equal(res.body.surname, 'da Verrazzano');
+          done();
+        });
       });
+
     });
 
   });
@@ -160,13 +166,29 @@ suite('Functional Tests', function() {
 
   // On Gomix we'll use this setting
   /** ### Copy your project's url here  ### **/
-  Browser.site = 'https://sincere-cone.gomix.me'; 
+  // Browser.site = 'https://leeward-fear.glitch.me'; 
   
   // If you are testing on a local environment replace the line above  with 
   // Browser.localhost('example.com', (process.env.PORT || 3000));
+  Browser.localhost('example.com', 3000);
 
   suite('e2e Testing with Zombie.js', function() {
     const browser = new Browser();
+
+    browser.oldFill = function(selector, value) {
+      const field = this.field(selector);
+      assert(field && (field.tagName === 'TEXTAREA' || (field.tagName === 'INPUT')), `No INPUT matching '${selector}'`);
+      assert(!field.disabled, 'This INPUT field is disabled');
+      assert(!field.readonly, 'This INPUT field is readonly');
+  
+      // Switch focus to field, change value and emit the input event (HTML5)
+      field.focus();
+      field.value = value;
+      this.fire(field, 'input', false);
+      // Switch focus out of field, if value changed, this will emit change event
+      field.blur();
+      return this;
+    };
 
     // Mocha allows You to prepare the ground running some code
     // before the actual tests. This can be useful for example to create
@@ -200,72 +222,164 @@ suite('Functional Tests', function() {
       
       // ### EXAMPLE ###
       test('#example - submit the input "surname" : "Polo"', function(done) {
-        browser
-          .fill('surname', 'Polo')
-          .pressButton('submit', function(){
+        // browser.fill('surname', 'Polo');
+        // browser.pressButton('submit', function(){  
+        //     // pressButton is ## Async ##.  
+        //   // It waits for the ajax call to complete...
+        //   // assert that status is OK 200
+        //   browser.assert.success();
+        //   // assert that the text inside the element 'span#name' is 'Marco'
+        //   browser.assert.text('span#name', 'Marco');
+        //   // assert that the text inside the element 'span#surname' is 'Polo'
+        //   browser.assert.text('span#surname', 'Polo');
+        //   // assert that the element(s) 'span#dates' exist and their count is 1
+        //   browser.assert.element('span#dates', 1);
+
+        //   done();   // It's an async test, so we have to call 'done()''
+        // });
+
+        // browser.oldFill('surname', 'Polo')
+        // .pressButton('submit', function(){  
+        //     // pressButton is ## Async ##.  
+        //   // It waits for the ajax call to complete...
+        //   // assert that status is OK 200
+        //   browser.assert.success();
+        //   // assert that the text inside the element 'span#name' is 'Marco'
+        //   browser.assert.text('span#name', 'Marco');
+        //   // assert that the text inside the element 'span#surname' is 'Polo'
+        //   browser.assert.text('span#surname', 'Polo');
+        //   // assert that the element(s) 'span#dates' exist and their count is 1
+        //   browser.assert.element('span#dates', 1);
+
+        //   done();   // It's an async test, so we have to call 'done()''
+        // });
+
+        const submitAndTest = () => {
+          browser.pressButton('submit', function(){  
             // pressButton is ## Async ##.  
-            // It waits for the ajax call to complete...
+          // It waits for the ajax call to complete...
+          // assert that status is OK 200
+          browser.assert.success();
+          // assert that the text inside the element 'span#name' is 'Marco'
+          browser.assert.text('span#name', 'Marco');
+          // assert that the text inside the element 'span#surname' is 'Polo'
+          browser.assert.text('span#surname', 'Polo');
+          // assert that the element(s) 'span#dates' exist and their count is 1
+          browser.assert.element('span#dates', 1);
 
-            // assert that status is OK 200
-            browser.assert.success();
-            // assert that the text inside the element 'span#name' is 'Marco'
-            browser.assert.text('span#name', 'Marco');
-            // assert that the text inside the element 'span#surname' is 'Polo'
-            browser.assert.text('span#surname', 'Polo');
-            // assert that the element(s) 'span#dates' exist and their count is 1
-            browser.assert.element('span#dates', 1);
-
-            done();   // It's an async test, so we have to call 'done()''
-          });
+          done();   // It's an async test, so we have to call 'done()''
+        });
+        };
+        browser.fill('surname', 'Vespucci', submitAndTest);
+        
       });
 
       /** Now it's your turn. Please don't use the keyword #example in the title. **/
       
       test('submit "surname" : "Colombo" - write your e2e test...', function(done) {
-
         // fill the form...
         // then submit it pressing 'submit' button.
-        //
-        // in the callback...
-        // assert that status is OK 200
-        // assert that the text inside the element 'span#name' is 'Cristoforo'
-        // assert that the text inside the element 'span#surname' is 'Colombo'
-        // assert that the element(s) 'span#dates' exist and their count is 1
-        browser
-          .fill('surname', 'Colombo')
-          .pressButton('submit', function(){
-            
+        // browser.fill('surname', 'Colombo');
+        // browser.pressButton('submit', function() {
+        //   /** YOUR TESTS HERE, Don't forget to remove assert.fail() **/
+        //   // pressButton is Async.  Waits for the ajax call to complete...
+        //   // assert that status is OK 200
+        //   browser.assert.success();
+        //   // assert that the text inside the element 'span#name' is 'Cristoforo'
+        //   browser.assert.text('span#name', 'Cristoforo');
+        //   // assert that the text inside the element 'span#surname' is 'Colombo'
+        //   browser.assert.text('span#surname', 'Colombo');
+        //   // assert that the element(s) 'span#dates' exist and their count is 1
+        //   browser.assert.element('span#dates', 1);
+        //   done();   // It's an async test, so we have to call 'done()''
+        // });
+
+        // browser.fill('surname', 'Colombo').then(
+        //   function() {
+        //     browser.pressButton('submit', function() {
+        //       /** YOUR TESTS HERE, Don't forget to remove assert.fail() **/
+        //       // pressButton is Async.  Waits for the ajax call to complete...
+        //       // assert that status is OK 200
+        //       browser.assert.success();
+        //       // assert that the text inside the element 'span#name' is 'Cristoforo'
+        //       browser.assert.text('span#name', 'Cristoforo');
+        //       // assert that the text inside the element 'span#surname' is 'Colombo'
+        //       browser.assert.text('span#surname', 'Colombo');
+        //       // assert that the element(s) 'span#dates' exist and their count is 1
+        //       browser.assert.element('span#dates', 1);
+        //       done();   // It's an async test, so we have to call 'done()''
+        //     });
+        //   }
+        // );
+
+        // browser.oldFill('surname', 'Colombo')
+        // .pressButton('submit', function() {
+        //   /** YOUR TESTS HERE, Don't forget to remove assert.fail() **/
+        //   // pressButton is Async.  Waits for the ajax call to complete...
+        //   // assert that status is OK 200
+        //   browser.assert.success();
+        //   // assert that the text inside the element 'span#name' is 'Cristoforo'
+        //   browser.assert.text('span#name', 'Cristoforo');
+        //   // assert that the text inside the element 'span#surname' is 'Colombo'
+        //   browser.assert.text('span#surname', 'Colombo');
+        //   // assert that the element(s) 'span#dates' exist and their count is 1
+        //   browser.assert.element('span#dates', 1);
+        //   done();   // It's an async test, so we have to call 'done()''
+        // });
+
+        const submitAndTest = () => {
+          browser.pressButton('submit', function() {
             /** YOUR TESTS HERE, Don't forget to remove assert.fail() **/
-            
             // pressButton is Async.  Waits for the ajax call to complete...
-
             // assert that status is OK 200
-
-            // assert that the text inside the element 'span#name' is 'Marco'
-
-            // assert that the text inside the element 'span#surname' is 'Polo'
-
+            browser.assert.success();
+            // assert that the text inside the element 'span#name' is 'Cristoforo'
+            browser.assert.text('span#name', 'Cristoforo');
+            // assert that the text inside the element 'span#surname' is 'Colombo'
+            browser.assert.text('span#surname', 'Colombo');
             // assert that the element(s) 'span#dates' exist and their count is 1
-            
-            assert.fail();
-            
+            browser.assert.element('span#dates', 1);
             done();   // It's an async test, so we have to call 'done()''
           });
-        // 
+        };
+        browser.fill('surname', 'Vespucci', submitAndTest);
+        
       });
       
       /** Try it again... No help this time **/
       test('submit "surname" : "Vespucci" - write your e2e test...', function(done) {
-
         // fill the form, and submit.
-        // assert that status is OK 200
-        // assert that the text inside the element 'span#name' is 'Amerigo'
-        // assert that the text inside the element 'span#surname' is 'Vespucci'
-        // assert that the element(s) 'span#dates' exist and their count is 1
-        assert.fail();
-        done();
-      
+        // browser.fill('surname', 'Vespucci');
+        // browser.pressButton('submit', function() { 
+
+        //   // assert that status is OK 200
+        //   browser.assert.success();
+        //   // assert that the text inside the element 'span#name' is 'Amerigo'
+        //   browser.assert.text('span#name', 'Amerigo');
+        //   // assert that the text inside the element 'span#surname' is 'Vespucci'
+        //   browser.assert.text('span#surname', 'Vespucci');
+        //   // assert that the element(s) 'span#dates' exist and their count is 1
+        //   browser.assert.element('span#dates', 1);
+        //   done();   // It's an async test, so we have to call 'done()''
+        // }); 
+        const submitAndTest = () => {
+          browser.pressButton('submit', function() { 
+
+            // assert that status is OK 200
+            browser.assert.success();
+            // assert that the text inside the element 'span#name' is 'Amerigo'
+            browser.assert.text('span#name', 'Amerigo');
+            // assert that the text inside the element 'span#surname' is 'Vespucci'
+            browser.assert.text('span#surname', 'Vespucci');
+            // assert that the element(s) 'span#dates' exist and their count is 1
+            browser.assert.element('span#dates', 1);
+            done();   // It's an async test, so we have to call 'done()''
+          });
+        };
+        browser.fill('surname', 'Vespucci', submitAndTest);
+        
       });
+
     });
   });
 });
