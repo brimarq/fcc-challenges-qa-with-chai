@@ -4,8 +4,9 @@ https://learn.freecodecamp.org/information-security-and-quality-assurance/qualit
 
 ## REF:  
  [ChaiJS website](https://www.chaijs.com/)  
- [MochaJS website](https://mochajs.org/)    
- [Chai assert API](https://www.chaijs.com/api/assert/)
+ [MochaJS website](https://mochajs.org/)  
+ [Chai assert API](https://www.chaijs.com/api/assert/)  
+ [Zombie.js](https://zombie.js.org/) 
 
 ___
 ## CHALLENGES:  
@@ -276,6 +277,107 @@ test('#instanceOf, #notInstanceOf', function() {
 ### Functional Tests (#19 - 24)  
 Get the tests in `tests/2_functional-tests.js` to pass.
 
+### 19. Run Functional Tests on API Endpoints using Chai-HTTP  
+Assert that `res.status == 200` and `res.text == 'hello Guest'`.
 
+```js
+// If no name is passed, the endpoint responds with 'hello Guest'.
+test('Test GET /hello with no name', function(done) { // Don't forget the callback...
+  chai.request(server) // 'server' is the Express App
+  .get('/hello') // http_method(url). NO NAME in the query !
+  .end(function(err, res) { // res is the response object
+    // Test the status and the text response (see the example above). 
+    // Please follow the order -status, -text. We rely on that in our tests.
+    // It should respond 'Hello Guest'
+    assert.equal(res.status, 200);
+    assert.equal(res.text, 'hello Guest');
+    done(); // Always call the `done()` callback when finished.
+  });
+});
+```
+### 20. Run Functional Tests on API Endpoints using Chai-HTTP (II)  
+Send your name in the query and test the `.status` and `.text` in the response.   
+
+```js
+test('Test GET /hello with your name', function(done) { // Don't forget the callback... 
+  chai.request(server) // 'server' is the Express App
+  .get('/hello?name=Brian') /** <=== Put your name in the query **/ 
+  .end(function(err, res) { // res is the response object
+    // Test the status and the text response. Follow the test order like above.
+    assert.equal(res.status, 200);
+    assert.equal(res.text, 'hello Brian'/** <==  Put your name here **/);
+    done(); // Always call the 'done()' callback when finished.
+  });
+});
+```
+
+### 21. Run Functional Tests on an API Response using Chai-HTTP (III) - PUT method  
+In the next example we'll see how to send data in a request payload (body).  
+We are going to test a PUT request. The '/travellers' endpoint accepts a JSON object taking the structure:
+```
+{surname: [last name of a traveller of the past]}
+```
+The route responds with:   
+```
+{name: [first name], surname:[last name], dates: [birth - death years]}
+```
+See the server code for more details.  
+Send `{surname: 'Colombo'}`. Replace assert.fail() and make the test pass.  
+Check for 1) `status`, 2) `type`, 3) `body.name`, 4) `body.surname`  
+Follow the assertion order above, We rely on it.
+
+```js
+test('send {surname: "Colombo"}',  function(done) {
+  // we setup the request for you...
+  chai.request(server)
+  .put('/travellers')
+  /** send {surname: 'Colombo'} here **/
+  .send({surname: 'Colombo'})
+  .end(function(err, res) { 
+    /** your tests here **/
+    assert.equal(res.status, 200);
+    assert.equal(res.type, 'application/json');
+    assert.equal(res.body.name, 'Cristoforo'); 
+    assert.equal(res.body.surname, 'Colombo');
+    done(); // Never forget the 'done()' callback...
+  });
+});
+```
+
+### 22. Run Functional Tests on API Response using Chai-HTTP (IV) - PUT method  
+This exercise is similar to the preceding one. Look at it for the details.  
+Send {surname: 'da Verrazzano'}. Replace assert.fail() and make the test pass.  
+Check for 1) `status`, 2) `type`, 3) `body.name`, 4) `body.surname`  
+Follow the assertion order above, We rely on it.  
+
+```js
+test('send {surname: "da Verrazzano"}', function(done) {
+  /** place the chai-http request code here... **/
+  chai.request(server)
+  .put('/travellers')
+  .send({surname: "da Verrazzano"})
+  .end(function(err, res) {
+    /** place your tests inside the callback **/
+    assert.equal(res.status, 200);
+    assert.equal(res.type, 'application/json');
+    assert.equal(res.body.name, 'Giovanni'); 
+    assert.equal(res.body.surname, 'da Verrazzano');
+    done();
+  });
+});
+```
+
+### 23. Run Functional Tests using a Headless Browser  
+In the next challenges we are going to simulate the human interaction with a page using a device called 'Headless Browser'.  
+
+A headless browser is a web browser without a graphical user interface. These kind of tools are particularly useful for testing web pages as they are able to render and understand HTML, CSS, and JavaScript the same way a browser would.  
+
+For these challenges we are using Zombie.JS. It's a lightweight browser which is totally based on JS, without relying on additional binaries to be installed. This feature makes it usable in an environment such as Glitch. There are many other (more powerful) options.  
+
+Look at the examples in the code for the exercise directions Follow the assertions order, We rely on it.  
+
+```js
+
+```
 
 https://leeward-fear.glitch.me
